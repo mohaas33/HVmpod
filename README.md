@@ -1,8 +1,7 @@
-High Voltage System
+## High Voltage System
 
-Location: Products directory
+### Main commands
 
-Commands:
 To turn system on(1) and off(0) 
 snmpset -v 2c -m +WIENER-CRATE-MIB -c private $IP sysMainSwitch.0 i 1  
 
