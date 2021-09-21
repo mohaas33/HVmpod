@@ -10,7 +10,7 @@ snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru $IP outputSwitch.index i 1
 
 
 ### Script should do:
-- [ ] Read voltage settings from the txt file ([example](https://github.com/mohaas33/HVmpod/config/voltage_set.txt) );
+- [ ] Read voltage settings from the txt file ([example](https://github.com/mohaas33/HVmpod/blob/main/config/voltage_set.txt) );
 - [ ] Set the rampup speed and the voltage for each channel with respect to the txt file;
 - [ ] Read the voltages on the channels that it hve turned on and print on the screen;
 
