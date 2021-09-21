@@ -37,7 +37,7 @@ do
 	do
 	    multfactor=100
 	    index=$(( $j * $multfactor + $i ))
-	    #Turn channel of each module at the index on 
+	    #Turn channel of each module at the index off 
 	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputSwitch.u$index i 0
 	done
     fi 
