@@ -37,10 +37,10 @@ do
 		echo "i = $i"
 	    multfactor=100
 	    index=$(( $j * $multfactor + $i ))
+	    #Set voltage of channel at the index
+	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltage.u$index F ${voltageList[$i]}
 	    #Turn channel of each module at the index on 
 	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputSwitch.u$index i 1
-	    #Set voltage of channel at the index
-	    #snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltage.u$i i ${voltageList[$i]}
 	done
     fi 
 done
@@ -52,10 +52,12 @@ do
     if [[ ($j -eq $module1) ]]
     then
 	#Loop through all channel per module
-	for i in {0..15}
+	for (( i=0; i<$nVoltages; i++ ))
 	do
 	    multfactor=100
 	    index=$(( $j * $multfactor + $i ))
+	    #Set voltage of channel at the index
+	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltage.u$index F $0
 	    #Turn channel of each module at the index off 
 	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputSwitch.u$index i 0
 	done
