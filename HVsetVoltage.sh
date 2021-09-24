@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #file with voltage values (currently just using an example file)
-voltagetxt="/config/voltage_set.txt"
+voltagetxt="./config/voltage_set.txt"
 
 voltageList=()
 
@@ -12,7 +12,7 @@ do
 done < "$voltagetxt"
 
 #number of voltages in the list
-nVoltages=${#args[@]}
+nVoltages=${#voltageList[@]}
 
 #positions of modules in HV crate (0-9)
 module1=2
@@ -23,22 +23,24 @@ module5=8
 module6=9
 #Turn on HV system on 
 snmpset -v 2c -m +WIENER-CRATE-MIB -c private 192.168.1.102 sysMainSwitch.0 i 1
-sleep 20s  #Wait 20s before turning all channels on (delay must be >10s)
+#Wait 20s before turning all channels on (delay must be >10s)
+sleep 20s  
 #loop through all modules
 for j in {0..9}
 do
     #if [[ ($j -eq $module1) || ($j -eq $module2) || ($j -eq $module3) || ($j -eq $module4) || ($j -eq $module5) || ($j -eq $module6) ]]
-    if [[ ($j -eq $module1) ]]
+    if [ $j -eq $module1 ]
     then
 	#Loop through all channel per module
-	for (( i=0; i<${nVoltages}; i++ ))
+	for (( i=0; i<$nVoltages; i++ ))
 	do
+		echo "i = $i"
 	    multfactor=100
 	    index=$(( $j * $multfactor + $i ))
-	    #Set voltage of channel at the index
-	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltage.u$i i ${voltageList[$i]}
 	    #Turn channel of each module at the index on 
 	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputSwitch.u$index i 1
+	    #Set voltage of channel at the index
+	    #snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltage.u$i i ${voltageList[$i]}
 	done
     fi 
 done
@@ -47,7 +49,7 @@ sleep 20s
 #loop through all modules to turn each channel off
 for j in {0..9}
 do
-    if [[ ($j -eq $module1) || ($j -eq $module2) || ($j -eq $module3) || ($j -eq $module4) || ($j -eq $module5) || ($j -eq $module6) ]]
+    if [[ ($j -eq $module1) ]]
     then
 	#Loop through all channel per module
 	for i in {0..15}
