@@ -30,15 +30,19 @@ do
     #if [[ ($j -eq $module1) || ($j -eq $module2) || ($j -eq $module3) || ($j -eq $module4) || ($j -eq $module5) || ($j -eq $module6) ]]
     if [[ ($j -eq $module1) ]]
     then
-	#Loop through all channel per module
+	#Loop through all channels per module
 	for (( i=0; i<${nVoltages}; i++ ))
 	do
 	    multfactor=100
 	    index=$(( $j * $multfactor + $i ))
 	    #Set voltage of channel at the index
-	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltage.u$i i ${voltageList[$i]}
+	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltage.u$index i ${voltageList[$i]}
+	    #Set rate of voltage increase
+	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltageRiseRate.u$index i 5.0
 	    #Turn channel of each module at the index on 
 	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputSwitch.u$index i 1
+	    #Check status of channel
+	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputStatus.u$index i 1
 	done
     fi 
 done
@@ -54,6 +58,8 @@ do
 	do
 	    multfactor=100
 	    index=$(( $j * $multfactor + $i ))
+	    #Set rate of voltage decrease
+	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltageFallRate.u$i i 5.0
 	    #Turn channel of each module at the index off 
 	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputSwitch.u$index i 0
 	done
