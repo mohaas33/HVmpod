@@ -12,7 +12,7 @@ do
 done < "$voltagetxt"
 
 #number of voltages in the list
-nVoltages=${#args[@]}
+nVoltages=${#voltageList[@]}
 
 #positions of modules in HV crate (0-9)
 module1=2
