@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #file with voltage values (currently just using an example file)
-voltagetxt="/config/voltage_set.txt"
+voltagetxt="./config/voltage_set.txt"
 
 voltageList=()
 
@@ -23,15 +23,16 @@ module5=8
 module6=9
 #Turn on HV system on 
 snmpset -v 2c -m +WIENER-CRATE-MIB -c private 192.168.1.102 sysMainSwitch.0 i 1
-sleep 20s  #Wait 20s before turning all channels on (delay must be >10s)
+#Wait 20s before turning all channels on (delay must be >10s)
 #loop through all modules
+sleep 20s  
 for j in {0..9}
 do
     #if [[ ($j -eq $module1) || ($j -eq $module2) || ($j -eq $module3) || ($j -eq $module4) || ($j -eq $module5) || ($j -eq $module6) ]]
-    if [[ ($j -eq $module1) ]]
+    if [ $j -eq $module1 ]
     then
 	#Loop through all channels per module
-	for (( i=0; i<${nVoltages}; i++ ))
+	for (( i=0; i<$nVoltages; i++ ))
 	do
 	    multfactor=100
 	    index=$(( $j * $multfactor + $i ))
@@ -51,7 +52,7 @@ sleep 20s
 #loop through all modules to turn each channel off
 for j in {0..9}
 do
-    if [[ ($j -eq $module1) || ($j -eq $module2) || ($j -eq $module3) || ($j -eq $module4) || ($j -eq $module5) || ($j -eq $module6) ]]
+    if [ $j -eq $module1 ]
     then
 	#Loop through all channel per module
 	for (( i=0; i<${nVoltages}; i++ ))
