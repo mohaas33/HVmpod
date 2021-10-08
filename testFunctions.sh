@@ -1,14 +1,25 @@
 #Test with first channel
 index=201
 
+#set voltage
+setVoltage=100
+#set voltage ramp rate
+setVramp=50
+
 #Check status of channel
 snmpget -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputStatus.u$index
 #Check rise rate setting
 snmpget -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltageRiseRate.u$index 
 #Set voltage of channel at the index
-snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltage.u$index F 0.0
+voltage=$(snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltage.u$index F $setVoltage)
 #Set rate of voltage increase
-#snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltageRiseRate.u$index F 50.0
+rampspeed=$(snmpset -OqvU -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltageRiseRate.u$index F $setVramp)
+
+#check status
+voltage=$(snmpget -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltage.u$index)
+rampspeed=$(snmpget -OqvU -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltageRiseRate.u$index)
+
+echo "$voltage $rampspeed"
 
 #ON
 tmult=1000
