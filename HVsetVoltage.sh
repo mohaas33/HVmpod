@@ -27,8 +27,8 @@ module6=9
 #Turn on HV system on 
 snmpset -v 2c -m +WIENER-CRATE-MIB -c private 192.168.1.102 sysMainSwitch.0 i 1
 #Wait 20s before turning all channels on (delay must be >10s)
-#loop through all modules
 sleep 20s  
+#loop through all modules
 for j in {0..9}
 do
     #if [[ ($j -eq $module1) || ($j -eq $module2) || ($j -eq $module3) || ($j -eq $module4) || ($j -eq $module5) || ($j -eq $module6) ]]
