@@ -67,7 +67,7 @@ do
 	    #Set voltage of channel at the index
 	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltage.u$index F ${voltageList[$i]}
 	    #Set voltage rampup rate
-	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltageRiseRate.u$index F ${rampupList[$i]}
+	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltageRiseRate.u$index F $(( -${rampupList[$i]} ))
 	    #Set voltage rampdown rate
 	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltageFallRate.u$index F ${rampdownList[$i]}
 	    #Turn channel of each module at the index on 
