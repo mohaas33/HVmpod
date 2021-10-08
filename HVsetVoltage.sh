@@ -14,9 +14,6 @@ done < "$voltagetxt"
 #number of voltages in the list
 nVoltages=${#voltageList[@]}
 
-#set voltage rampup rate (V/s)
-voltageramp=50
-
 #positions of modules in HV crate (0-9)
 module1=2
 module2=3
@@ -40,9 +37,9 @@ do
 	    multfactor=100
 	    index=$(( $j * $multfactor + $i ))
 	    #Set voltage of channel at the index
-	    voltage=$(snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltage.u$index F ${voltageList[$i]})
+	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltage.u$index F ${voltageList[$i]}
 	    #Set rate of voltage increase
-	    rampspeed=$(snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltageRiseRate.u$index F 5.0)
+	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltageRiseRate.u$index F 5.0
 	    #Turn channel of each module at the index on 
 	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputSwitch.u$index i 1
 	    #Check status of channel
