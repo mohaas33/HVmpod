@@ -9,6 +9,7 @@
 [Voltage scheme.](https://github.com/mohaas33/HVmpod/blob/main/config/NikolaiSettings-HalfGap4.xlsx)
 
 - To setup voltages rampup/ramdown speed and trip currents and turn each channel ON:
+
 `HVsetVoltage.sh`
 
 It reads the values from files:
@@ -18,6 +19,7 @@ It reads the values from files:
 [rampup_set1.txt](https://github.com/mohaas33/HVmpod/blob/main/config/rampup_set1.txt)
 
 - To rampdown:
+
 `HVsetVoltage.sh`
 
 It reads the values from files:
