@@ -10,13 +10,18 @@
 
 - To setup voltages rampup/ramdown speed and trip currents and turn each channel ON:
 `HVsetVoltage.sh`
+
 It reads the values from files:
+
 [voltage_set1.txt](https://github.com/mohaas33/HVmpod/blob/main/config/voltage_set1.txt)
+
 [rampup_set1.txt](https://github.com/mohaas33/HVmpod/blob/main/config/rampup_set1.txt)
 
 - To rampdown:
 `HVsetVoltage.sh`
+
 It reads the values from files:
+
 [rampdown_set1.txt](https://github.com/mohaas33/HVmpod/blob/main/config/rampdown_set1.txt)
 
 
