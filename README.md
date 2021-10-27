@@ -20,7 +20,7 @@ It reads the values from files:
 
 - To rampdown:
 
-`HVsetVoltage.sh`
+`HVturnoff.sh`
 
 It reads the values from files:
 
