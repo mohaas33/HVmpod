@@ -23,10 +23,12 @@ do
 	     #Set voltage of channel at the index back to zero
 	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputVoltage.u$index F 0
 	    #Turn channel of each module at the index off 
-	    snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputSwitch.u$index i 0
+	    #snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputSwitch.u$index i 0
 	done
     fi 
 done
 
+ #Turn all modules off
+snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 groupsSwitch.0 i 0
 #turn system off
 snmpset -v 2c -m +WIENER-CRATE-MIB -c private 192.168.1.102 sysMainSwitch.0 i 0
