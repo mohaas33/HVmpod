@@ -30,5 +30,12 @@ done
 
  #Turn all modules off
 snmpset -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 groupsSwitch.0 i 0
+
+for (( i=0; i<$nVoltages; i++ ))
+do  
+    #Check status of each channel
+    snmpget -Oqv -v 2c -m +WIENER-CRATE-MIB -c guru 192.168.1.102 outputStatus.u$index
+done
+
 #turn system off
 snmpset -v 2c -m +WIENER-CRATE-MIB -c private 192.168.1.102 sysMainSwitch.0 i 0
